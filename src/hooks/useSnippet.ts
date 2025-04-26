@@ -6,6 +6,8 @@ export const useSnippets = (query: SnippetsInput) => {
   return useQuery({
     queryKey: ["snippets", query],
     queryFn: () => SnippetAPI.getSnippets(query),
+    staleTime: 0,
+    refetchOnWindowFocus: false,
   });
 };
 
@@ -13,6 +15,8 @@ export const useSnippet = (id: string) => {
   return useQuery({
     queryKey: ["snippet", id],
     queryFn: () => SnippetAPI.getSnippet(id),
+    staleTime: 0,
+    refetchOnWindowFocus: false,
   });
 };
 

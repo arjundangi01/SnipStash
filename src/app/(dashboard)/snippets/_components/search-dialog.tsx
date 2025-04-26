@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Command } from "cmdk";
 import {
   CommandDialog,
   CommandEmpty,
@@ -60,7 +59,6 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
         const data = await response.json();
         setResults(data.snippets);
       } catch (error) {
-        console.error("Error searching snippets:", error);
       } finally {
         setIsLoading(false);
       }

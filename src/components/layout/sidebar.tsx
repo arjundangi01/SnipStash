@@ -59,7 +59,6 @@ export function Sidebar() {
           setLanguages(langsData);
         }
       } catch (error) {
-        console.error("Error fetching sidebar data:", error);
       } finally {
         setIsLoading(false);
       }

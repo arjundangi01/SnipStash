@@ -1,8 +1,14 @@
 import { useRouter, useSearchParams } from "next/navigation";
+import language from "react-syntax-highlighter/dist/esm/languages/hljs/1c";
 
 type SnippetParams = {
   languages?: string[];
   tagIds?: string[];
+};
+
+type SnippetParamsInput = {
+  language: string;
+  tagId: string;
 };
 
 const snippetParamsKeys = {
@@ -28,7 +34,7 @@ export const useSnippetParams = () => {
   };
 
   const setParams = (
-    params: Partial<SnippetParams>,
+    params: Partial<SnippetParamsInput>,
     persistPreviousParams = true
   ) => {
     const newParams = new URLSearchParams();
@@ -43,20 +49,40 @@ export const useSnippetParams = () => {
       });
     }
 
-    if (params.languages) {
-      params.languages.forEach((language) => {
-        newParams.append(snippetParamsKeys.languages, language);
-      });
+    if (params.language) {
+      const languages = previousParams.languages || [];
+      if (!languages.includes(params.language) && params.language !== "en") {
+        newParams.set(
+          snippetParamsKeys.languages,
+          [...languages, params.language].join(",")
+        );
+      } else {
+        newParams.set(
+          snippetParamsKeys.languages,
+          languages
+            ?.filter((language) => language !== params.language)
+            .join(",")
+        );
+      }
     }
 
-    if (params.tagIds) {
-      params.tagIds.forEach((tagId) => {
-        newParams.append(snippetParamsKeys.tagIds, tagId);
-      });
+    if (params.tagId) {
+      const tagIds = previousParams.tagIds || [];
+      if (!tagIds.includes(params.tagId)) {
+        newParams.set(
+          snippetParamsKeys.tagIds,
+          [...tagIds, params.tagId].join(",")
+        );
+      } else {
+        newParams.set(
+          snippetParamsKeys.tagIds,
+          tagIds?.filter((tagId) => tagId !== params.tagId).join(",")
+        );
+      }
     }
 
     // update the url
-    router.push(`?${newParams.toString()}`);
+    router.replace(`?${newParams.toString()}`);
   };
 
   const clearParams = () => {

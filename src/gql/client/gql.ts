@@ -19,6 +19,7 @@ type Documents = {
     "\n      query getSnippet($publicId: String!) {\n        snippet(publicId: $publicId) {\n          publicId\n          title\n          description\n          language\n          code\n          snippetTags {\n            tag {\n              publicId\n              name\n            }\n          }\n        }\n      }\n    ": typeof types.GetSnippetDocument,
     "\n      mutation updateSnippet($input: UpdateSnippet!) {\n        updateSnippet(input: $input) {\n          publicId\n        }\n      }\n    ": typeof types.UpdateSnippetDocument,
     "\n      mutation deleteSnippet($input: DeleteSnippet!) {\n        deleteSnippet(input: $input)\n      }\n    ": typeof types.DeleteSnippetDocument,
+    "\n      query getTags {\n        tags {\n          publicId\n          name\n        }\n      }\n    ": typeof types.GetTagsDocument,
     "\n      mutation createUser($input: CreateUser!) {\n        createUser(input: $input) {\n          email\n        }\n      }\n    ": typeof types.CreateUserDocument,
     "\n      query me {\n        me {\n          email\n          name\n          publicId\n        }\n      }\n    ": typeof types.MeDocument,
 };
@@ -28,6 +29,7 @@ const documents: Documents = {
     "\n      query getSnippet($publicId: String!) {\n        snippet(publicId: $publicId) {\n          publicId\n          title\n          description\n          language\n          code\n          snippetTags {\n            tag {\n              publicId\n              name\n            }\n          }\n        }\n      }\n    ": types.GetSnippetDocument,
     "\n      mutation updateSnippet($input: UpdateSnippet!) {\n        updateSnippet(input: $input) {\n          publicId\n        }\n      }\n    ": types.UpdateSnippetDocument,
     "\n      mutation deleteSnippet($input: DeleteSnippet!) {\n        deleteSnippet(input: $input)\n      }\n    ": types.DeleteSnippetDocument,
+    "\n      query getTags {\n        tags {\n          publicId\n          name\n        }\n      }\n    ": types.GetTagsDocument,
     "\n      mutation createUser($input: CreateUser!) {\n        createUser(input: $input) {\n          email\n        }\n      }\n    ": types.CreateUserDocument,
     "\n      query me {\n        me {\n          email\n          name\n          publicId\n        }\n      }\n    ": types.MeDocument,
 };
@@ -66,6 +68,10 @@ export function graphql(source: "\n      mutation updateSnippet($input: UpdateSn
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n      mutation deleteSnippet($input: DeleteSnippet!) {\n        deleteSnippet(input: $input)\n      }\n    "): (typeof documents)["\n      mutation deleteSnippet($input: DeleteSnippet!) {\n        deleteSnippet(input: $input)\n      }\n    "];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n      query getTags {\n        tags {\n          publicId\n          name\n        }\n      }\n    "): (typeof documents)["\n      query getTags {\n        tags {\n          publicId\n          name\n        }\n      }\n    "];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

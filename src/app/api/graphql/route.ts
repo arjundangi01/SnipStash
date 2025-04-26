@@ -10,10 +10,8 @@ import { Resolvers } from "@/src/gql/graphql";
 import { GraphQLContext } from "./context";
 import { getSession } from "@/src/app/api/graphql/session";
 import { createSnippetResolvers } from "./snippet";
+import { createTagResolvers } from "./tag";
 
-// Note: this uses a path relative to the project's
-// root directory, which is the current working directory
-// if the server is executed using `npm run`.
 const schemaPath = "./src/app/api/graphql/schema/**/*.graphql";
 const typeDefs = globSync(schemaPath)
   .map((file) => readFileSync(file, { encoding: "utf-8" }))
@@ -21,9 +19,10 @@ const typeDefs = globSync(schemaPath)
 
 const userResolvers = createUserResolvers();
 const snippetResolvers = createSnippetResolvers();
+const tagResolvers = createTagResolvers();
 
 const server = new ApolloServer<Resolvers>({
-  resolvers: [userResolvers, snippetResolvers],
+  resolvers: [userResolvers, snippetResolvers, tagResolvers],
   typeDefs: typeDefs,
 });
 

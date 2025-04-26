@@ -5,7 +5,8 @@ import {
 } from "@/src/hooks/useSnippet";
 import { SnippetFormValues } from "../_utils/snippetForm";
 import { openErrorToast, openSuccessToast } from "@/src/components/toast/toast";
-
+import { useRouter } from "next/navigation";
+import { AppRouts } from "@/src/lib/app-routes";
 export const useSubmitSnippet = ({
   mode,
 }: {
@@ -14,6 +15,7 @@ export const useSubmitSnippet = ({
   const { mutate: createSnippet, isPending: isCreating } = useCreateSnippet();
   const { mutate: updateSnippet, isPending: isUpdating } = useUpdateSnippet();
   const { mutate: deleteSnippet, isPending: isDeleting } = useDeleteSnippet();
+  const router = useRouter();
 
   const handleSubmit = (data: SnippetFormValues) => {
     if (mode === "create") {
@@ -27,6 +29,7 @@ export const useSubmitSnippet = ({
         },
         {
           onSuccess: () => {
+            router.push(AppRouts.user.dashboard);
             openSuccessToast({ message: "Snippet created successfully" });
           },
           onError: (error) => {

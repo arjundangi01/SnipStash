@@ -116,7 +116,6 @@ export function SnippetCard({ snippet }: SnippetCardProps) {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
-        onClick={handleClick}
       >
         <Card className="overflow-hidden border group h-full flex flex-col">
           <CardHeader className="pb-4 pt-5 px-5 flex-row justify-between items-start gap-2">
@@ -166,7 +165,7 @@ export function SnippetCard({ snippet }: SnippetCardProps) {
           <CardContent className="p-0 flex-1">
             <div className="relative overflow-hidden rounded-sm max-h-64">
               <div className="relative h-full">
-                <div className="overflow-x-auto">
+                <div className="overflow-x-auto" onClick={handleClick}>
                   <SyntaxHighlighter
                     language={snippet.language.toLowerCase()}
                     style={vscDarkPlus}

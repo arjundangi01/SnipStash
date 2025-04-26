@@ -9,6 +9,8 @@ export const useMe = () => {
   return useQuery({
     queryKey: ["me"],
     queryFn: UserAPI.getMe,
+    staleTime: 0,
+    refetchOnWindowFocus: false,
   });
 };
 

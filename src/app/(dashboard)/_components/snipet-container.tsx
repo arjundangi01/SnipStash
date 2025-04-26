@@ -1,21 +1,26 @@
 "use client";
 import { useSnippets } from "@/src/hooks/useSnippet";
 import { SnippetGrid } from "./snippet-grid";
-import { useSnippetParams } from "../_hooks/useSnippetParams";
+import { useSnippetParams } from "../snippets/_hooks/useSnippetParams";
 import { Search, X } from "lucide-react";
 import { Input } from "@/src/components/ui/input";
 import { Button } from "@/src/components/ui/button";
 import { Suspense, useState } from "react";
+import { useDebounce } from "@/src/hooks/useDebounce";
+import TagsFilter from "./tags-filter";
+import LanguagesFilter from "./languages-filter";
 
 const SnippetContainer = () => {
-  const { getParams, setParams, clearParams } = useSnippetParams();
+  const { getParams } = useSnippetParams();
   const [search, setSearch] = useState("");
   const { languages, tagIds } = getParams();
+
+  const debouncedSearch = useDebounce(search);
 
   const { data: snippets, isFetching } = useSnippets({
     languages: languages || [],
     tagIds: tagIds || [],
-    search: search || "",
+    search: debouncedSearch || "",
   });
   return (
     <div>
@@ -40,11 +45,11 @@ const SnippetContainer = () => {
           </Button>
         )}
       </div>
+      <TagsFilter />
+      <LanguagesFilter />
 
       <SnippetGrid
         snippets={snippets?.snippets}
-        // initialLanguages={languages}
-        // initialTags={formattedTags}
         search={search}
         isLoading={isFetching}
       />

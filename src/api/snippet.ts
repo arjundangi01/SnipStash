@@ -84,4 +84,16 @@ export class SnippetAPI {
     `);
     return request(this.GRAPHQL_URL, snippet, { input });
   };
+
+  static getTags = () => {
+    const tags = graphql(/* GraphQL */ `
+      query getTags {
+        tags {
+          publicId
+          name
+        }
+      }
+    `);
+    return request(this.GRAPHQL_URL, tags, {});
+  };
 }

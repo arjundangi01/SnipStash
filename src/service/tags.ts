@@ -14,7 +14,7 @@ export type ListSnippetTagsInput = {
 };
 
 export type ListTagsInput = {
-  names: string[];
+  names?: string[];
 };
 
 export type GetTagInput = {
@@ -48,7 +48,7 @@ export class TagsService {
   async listTags(input: ListTagsInput) {
     return this.prismaClient.tag.findMany({
       where: {
-        name: { in: input.names },
+        ...(input?.names && { name: { in: input.names } }),
       },
     });
   }

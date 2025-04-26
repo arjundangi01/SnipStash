@@ -6,5 +6,6 @@ export const AppRouts = {
   },
   user: {
     dashboard: "/dashboard",
+    snippets: "/snippets",
   },
 } as const;

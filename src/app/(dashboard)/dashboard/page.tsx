@@ -1,6 +1,6 @@
 "use client";
 import { Suspense } from "react";
-import SnippetContainer from "../snippets/_components/snipet-container";
+import SnippetContainer from "../_components/snipet-container";
 
 export default function DashboardPage() {
   return (

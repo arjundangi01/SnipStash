@@ -5,7 +5,7 @@ interface TagPattern {
 
 export const tagPatterns: TagPattern[] = [
   {
-    name: 'loop',
+    name: "loop",
     patterns: [
       /\bfor\s*\(/i,
       /\bwhile\s*\(/i,
@@ -15,7 +15,7 @@ export const tagPatterns: TagPattern[] = [
     ],
   },
   {
-    name: 'api',
+    name: "api",
     patterns: [
       /\bfetch\s*\(/i,
       /\baxios\b/i,
@@ -28,7 +28,7 @@ export const tagPatterns: TagPattern[] = [
     ],
   },
   {
-    name: 'error-handling',
+    name: "error-handling",
     patterns: [
       /\btry\s*{[\s\S]*}\s*catch\s*\(/i,
       /\bcatch\s*\(/i,
@@ -38,7 +38,7 @@ export const tagPatterns: TagPattern[] = [
     ],
   },
   {
-    name: 'array-ops',
+    name: "array-ops",
     patterns: [
       /\.map\s*\(/i,
       /\.filter\s*\(/i,
@@ -51,7 +51,7 @@ export const tagPatterns: TagPattern[] = [
     ],
   },
   {
-    name: 'debugging',
+    name: "debugging",
     patterns: [
       /console\.log\s*\(/i,
       /console\.error\s*\(/i,
@@ -63,7 +63,7 @@ export const tagPatterns: TagPattern[] = [
     ],
   },
   {
-    name: 'function',
+    name: "function",
     patterns: [
       /function\s+\w+\s*\(/i,
       /const\s+\w+\s*=\s*\([^)]*\)\s*=>/i,
@@ -73,7 +73,7 @@ export const tagPatterns: TagPattern[] = [
     ],
   },
   {
-    name: 'async',
+    name: "async",
     patterns: [
       /\basync\s+/i,
       /\bawait\s+/i,
@@ -83,7 +83,7 @@ export const tagPatterns: TagPattern[] = [
     ],
   },
   {
-    name: 'dom-manipulation',
+    name: "dom-manipulation",
     patterns: [
       /document\.get/i,
       /document\.query/i,
@@ -94,7 +94,7 @@ export const tagPatterns: TagPattern[] = [
     ],
   },
   {
-    name: 'regex',
+    name: "regex",
     patterns: [
       /new\s+RegExp\s*\(/i,
       /\/[^/]+\/[gimsuy]*/i,
@@ -105,7 +105,7 @@ export const tagPatterns: TagPattern[] = [
     ],
   },
   {
-    name: 'conditional',
+    name: "conditional",
     patterns: [
       /\bif\s*\(/i,
       /\belse\s+if\s*\(/i,
@@ -117,7 +117,7 @@ export const tagPatterns: TagPattern[] = [
     ],
   },
   {
-    name: 'import',
+    name: "import",
     patterns: [
       /\bimport\s+/i,
       /\brequire\s*\(/i,
@@ -129,40 +129,36 @@ export const tagPatterns: TagPattern[] = [
 ];
 
 export const languageFileExtensions: Record<string, string> = {
-  'javascript': 'js',
-  'typescript': 'ts',
-  'python': 'py',
-  'java': 'java',
-  'c#': 'cs',
-  'c++': 'cpp',
-  'ruby': 'rb',
-  'go': 'go',
-  'php': 'php',
-  'swift': 'swift',
-  'kotlin': 'kt',
-  'rust': 'rs',
-  'html': 'html',
-  'css': 'css',
-  'bash': 'sh',
-  'powershell': 'ps1',
-  'sql': 'sql',
+  javascript: "js",
+  typescript: "ts",
+  python: "py",
+  java: "java",
+  "c#": "cs",
+  "c++": "cpp",
+  ruby: "rb",
+  go: "go",
+  php: "php",
+  swift: "swift",
+  kotlin: "kt",
+  rust: "rs",
+  html: "html",
+  css: "css",
+  bash: "sh",
+  powershell: "ps1",
+  sql: "sql",
 };
 
 export function detectTags(code: string): string[] {
   const detectedTags: string[] = [];
 
-  tagPatterns.forEach(tagPattern => {
-    const hasPattern = tagPattern.patterns.some(pattern => pattern.test(code));
+  tagPatterns.forEach((tagPattern) => {
+    const hasPattern = tagPattern.patterns.some((pattern) =>
+      pattern.test(code)
+    );
     if (hasPattern) {
       detectedTags.push(tagPattern.name);
     }
   });
 
   return detectedTags;
-}
-
-export function getLanguageTag(language: string): string {
-  // Normalize language name
-  const normalizedLanguage = language.toLowerCase();
-  return normalizedLanguage;
 }

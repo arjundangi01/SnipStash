@@ -4,7 +4,6 @@ import { z } from "zod";
 import { getUsersClient } from "@/src/service/user";
 import { prismaClient } from "@/src/lib/db";
 import { setSession } from "../utils/session";
-import { cookies } from "next/headers";
 import { env } from "@/env.mjs";
 import { AppRouts } from "@/src/lib/app-routes";
 
@@ -16,7 +15,6 @@ const registerSchema = z.object({
 
 export async function POST(req: NextRequest) {
   const usersClient = getUsersClient();
-  const redirectUri = `${env.NEXT_PUBLIC_URL}${AppRouts.user.dashboard}`;
 
   try {
     const body = await req.json();
@@ -54,7 +52,10 @@ export async function POST(req: NextRequest) {
     });
 
     await setSession(output.user);
-    return Response.redirect(redirectUri, 307);
+    return NextResponse.json(
+      { message: "User created successfully" },
+      { status: 200 }
+    );
   } catch (error) {
     return NextResponse.json(
       { error: "Internal server error" },

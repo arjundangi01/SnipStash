@@ -7,7 +7,6 @@ import { AppRouts } from "@/src/lib/app-routes";
 
 export async function POST(req: NextRequest) {
   const usersClient = getUsersClient();
-  const redirectUri = `${env.NEXT_PUBLIC_URL}${AppRouts.user.dashboard}`;
 
   try {
     const body = await req.json();
@@ -18,7 +17,10 @@ export async function POST(req: NextRequest) {
     const result = await usersClient.login({ email, password: hashedPassword });
     await setSession(result.user);
 
-    return NextResponse.redirect(redirectUri, 307);
+    return NextResponse.json(
+      { message: "User logged in successfully" },
+      { status: 200 }
+    );
   } catch (error) {
     return NextResponse.json(
       { error: "Internal server error" },

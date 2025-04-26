@@ -1,7 +1,7 @@
 import { Prisma, type PrismaClient, Tag as PrismaTag } from "@prisma/client";
 import { prismaClient } from "@/src/lib/db";
 import { getPublicId } from "@/src/lib/id";
-import { detectTags, getLanguageTag } from "@/src/lib/auto-tag";
+import { detectTags } from "@/src/lib/auto-tag";
 import { getTagsClient } from "./tags";
 
 export type Snippet = {
@@ -41,7 +41,7 @@ export type GetSnippetInput = {
 export type GetUserSnippetsInput = {
   userId: string;
   search?: string;
-  language?: string;
+  languages?: string[];
   tagIds?: string[];
 };
 
@@ -126,19 +126,10 @@ export class SnippetService {
     }
 
     let autoDetectedTags: string[] = [];
-    let languageTag: string | null = null;
 
     if (input.code) {
       // Auto-detect tags from updated code
       autoDetectedTags = detectTags(input.code);
-    }
-
-    if (input.language) {
-      // Add language as a tag if language is updated
-      languageTag = getLanguageTag(input.language);
-      if (languageTag && !autoDetectedTags.includes(languageTag)) {
-        autoDetectedTags.push(languageTag);
-      }
     }
 
     // Combine auto-detected tags with user-provided tags
@@ -228,14 +219,24 @@ export class SnippetService {
         { title: { contains: input.search, mode: "insensitive" } },
         { code: { contains: input.search, mode: "insensitive" } },
         { description: { contains: input.search, mode: "insensitive" } },
+        {
+          snippetTags: {
+            some: {
+              tag: { name: { contains: input.search, mode: "insensitive" } },
+            },
+          },
+        },
+        {
+          language: { contains: input.search, mode: "insensitive" },
+        },
       ];
     }
 
-    if (input.language) {
-      where.language = input.language;
+    if (input.languages?.length) {
+      where.language = { in: input.languages };
     }
 
-    if (input.tagIds) {
+    if (input.tagIds?.length) {
       where.snippetTags = {
         some: {
           tagId: { in: input.tagIds },

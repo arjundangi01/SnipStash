@@ -42,7 +42,6 @@ export const createSnippetResolvers = (): Resolvers => {
             tags: formattedTags,
           };
         } catch (error) {
-          console.error("Failed to create snippet:", error);
           throw new Error("Failed to create snippet");
         }
       },
@@ -87,7 +86,6 @@ export const createSnippetResolvers = (): Resolvers => {
             tags: formattedTags,
           };
         } catch (error) {
-          console.error("Failed to update snippet:", error);
           throw new Error("Failed to update snippet");
         }
       },
@@ -104,7 +102,6 @@ export const createSnippetResolvers = (): Resolvers => {
           });
           return true;
         } catch (error) {
-          console.error("Failed to delete snippet:", error);
           throw new Error("Failed to delete snippet");
         }
       },
@@ -149,7 +146,6 @@ export const createSnippetResolvers = (): Resolvers => {
             user: ctx.user,
           };
         } catch (error) {
-          console.error("Failed to get snippet:", error);
           throw new Error("Failed to get snippet");
         }
       },
@@ -163,6 +159,9 @@ export const createSnippetResolvers = (): Resolvers => {
         try {
           const result = await snippetsClient.getUserSnippets({
             userId: ctx.user.publicId,
+            languages: args.input.languages || undefined,
+            tagIds: args.input.tagIds || undefined,
+            search: args.input.search || undefined,
           });
 
           return result.snippets.map((snippet) => {
@@ -189,7 +188,6 @@ export const createSnippetResolvers = (): Resolvers => {
             };
           });
         } catch (error) {
-          console.error("Failed to get snippets:", error);
           throw new Error("Failed to get snippets");
         }
       },

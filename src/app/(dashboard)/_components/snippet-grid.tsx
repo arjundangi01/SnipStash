@@ -14,12 +14,11 @@ import { Badge } from "@/src/components/ui/badge";
 import { Button } from "@/src/components/ui/button";
 
 import { GetSnippetsQuery } from "@/src/gql/client/graphql";
-import { useSnippetParams } from "../_hooks/useSnippetParams";
+import { useSnippetParams } from "../snippets/_hooks/useSnippetParams";
 
 interface SnippetGridProps {
   snippets?: GetSnippetsQuery["snippets"];
-  initialLanguages?: { name: string; count: number }[];
-  initialTags?: { publicId: string; name: string; count: number }[];
+
   isLoading?: boolean;
   initialTag?: string;
   search?: string;
@@ -27,8 +26,7 @@ interface SnippetGridProps {
 
 export function SnippetGrid({
   snippets = [],
-  initialLanguages = [],
-  initialTags = [],
+
   isLoading = false,
   initialTag = "",
   search,
@@ -48,25 +46,6 @@ export function SnippetGrid({
       {/* Filter controls */}
       <div className="space-y-4">
         <div className="flex flex-col sm:flex-row gap-4">
-          {/* Search */}
-
-          {/* Language filter */}
-          <div className="w-full sm:w-48">
-            {/* <Select value={language} onValueChange={setLanguage}>
-              <SelectTrigger>
-                <SelectValue placeholder="Language" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="">All languages</SelectItem>
-                {languages.map((lang) => (
-                  <SelectItem key={lang.name} value={lang.name}>
-                    {lang.name} ({lang.count})
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select> */}
-          </div>
-
           {/* Clear filters button */}
           {hasFilters && (
             <Button
@@ -100,11 +79,6 @@ export function SnippetGrid({
             </Badge>
           </div>
         )}
-      </div>
-
-      {/* Results count */}
-      <div className="text-sm text-muted-foreground">
-        {hasFilters && " with current filters"}
       </div>
 
       {/* Snippets grid */}

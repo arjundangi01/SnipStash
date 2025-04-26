@@ -8,6 +8,8 @@ import { getSession } from "./app/api/graphql/session";
 
 export const APP_URL = new URL(env.NEXT_PUBLIC_URL);
 
+const protectedRoutes = ["/dashboard", "/snippets"];
+
 export const DEFAULT_RESPONSE_COOKIE: Partial<ResponseCookie> = {
   maxAge: 60 * 60 * 24 * 365, // 1y
 };
@@ -26,6 +28,10 @@ export async function middleware(req: NextRequest) {
 
   if (pathname == "/" && session) {
     return NextResponse.redirect(new URL("/dashboard", req.url));
+  }
+
+  if (protectedRoutes.some((route) => pathname.startsWith(route)) && !session) {
+    return NextResponse.redirect(new URL("/auth/login", req.url));
   }
 
   return resp;
