@@ -199,8 +199,7 @@ export const createSnippetResolvers = (): Resolvers => {
     Snippet: {
       // Resolver for the user field on the Snippet type
       user: async (parent, _, ctx) => {
-        // The user is already included in the parent object from our query resolvers
-        return ctx.user || parent.user;
+        return ctx.user! || parent.user;
       },
       snippetTags: async (parent, _, ctx) => {
         const tagsClient = getTagsClient();
