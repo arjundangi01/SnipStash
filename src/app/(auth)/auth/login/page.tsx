@@ -41,7 +41,7 @@ export default function LoginPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-center gap-2 text-2xl font-bold">
         <BookOpen className="h-8 w-8" />
-        <span>StoryVerse</span>
+        <span>SnipStash</span>
       </div>
       <div className="text-center space-y-2">
         <h1 className="text-2xl font-semibold tracking-tight">Welcome back</h1>

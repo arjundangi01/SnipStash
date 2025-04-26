@@ -1,3 +1,5 @@
+import { getGeminiClient } from "../service/gemini";
+
 interface TagPattern {
   name: string;
   patterns: RegExp[];
@@ -148,7 +150,7 @@ export const languageFileExtensions: Record<string, string> = {
   sql: "sql",
 };
 
-export function detectTags(code: string): string[] {
+export async function detectTags(code: string): Promise<string[]> {
   const detectedTags: string[] = [];
 
   tagPatterns.forEach((tagPattern) => {
@@ -160,5 +162,11 @@ export function detectTags(code: string): string[] {
     }
   });
 
-  return detectedTags;
+  const geminiClient = getGeminiClient();
+  const detectedByGemini = await geminiClient.detectTagsWithGemini(code);
+
+  const uniqueTags = new Set([...detectedTags, ...detectedByGemini]);
+  const uniqueTagsArray = Array.from(uniqueTags);
+
+  return uniqueTagsArray;
 }

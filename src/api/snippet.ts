@@ -9,7 +9,7 @@ import {
 import request from "graphql-request";
 
 export class SnippetAPI {
-  static GRAPHQL_URL = `${env.NEXT_PUBLIC_URL}/api/graphql`;
+  static GRAPHQL_URL = `/api/graphql`;
 
   static createSnippet = (input: CreateSnippet) => {
     const snippet = graphql(/* GraphQL */ `

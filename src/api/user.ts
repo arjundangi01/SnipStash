@@ -4,8 +4,7 @@ import { CreateUser } from "@/src/gql/graphql";
 import request from "graphql-request";
 
 export class UserAPI {
-  static GRAPHQL_URL = `${env.NEXT_PUBLIC_URL}/api/graphql`;
-  //   static LOGIN_URL = `${env.NEXT_PUBLIC_URL}/api/auth/login`;
+  static GRAPHQL_URL = `/api/graphql`;
 
   static createUser = (input: CreateUser) => {
     const user = graphql(/* GraphQL */ `

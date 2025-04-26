@@ -64,7 +64,7 @@ export class SnippetService {
     const publicId = getPublicId("snippet");
 
     // Auto-detect tags from code
-    const autoDetectedTags = detectTags(input.code);
+    const autoDetectedTags = await detectTags(input.code);
 
     // Combine auto-detected tags with user-provided tags
     const allTags = Array.from(
@@ -129,7 +129,7 @@ export class SnippetService {
 
     if (input.code) {
       // Auto-detect tags from updated code
-      autoDetectedTags = detectTags(input.code);
+      autoDetectedTags = await detectTags(input.code);
     }
 
     // Combine auto-detected tags with user-provided tags
