@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  publicId  String    @unique
+  name      String
+  email     String    @unique
+  password  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  snippet   Snippet[]
+}
+
+model Snippet {
+  id          Int          @id @default(autoincrement())
+  publicId    String       @unique
+  title       String
+  code        String
+  description String?
+  language    String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  userId      String
+  user        User         @relation(fields: [userId], references: [publicId], onDelete: Cascade)
+  snippetTags SnippetTag[]
+}
+
+model Tag {
+  id          Int          @id @default(autoincrement())
+  publicId    String       @unique
+  name        String       @unique
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  snippetTags SnippetTag[]
+}
+
+model SnippetTag {
+  id        Int      @id @default(autoincrement())
+  publicId  String   @unique
+  snippetId String
+  tagId     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  snippet   Snippet  @relation(fields: [snippetId], references: [publicId], onDelete: Cascade)
+  tag       Tag      @relation(fields: [tagId], references: [publicId], onDelete: Cascade)
+
+  @@unique([snippetId, tagId])
+}

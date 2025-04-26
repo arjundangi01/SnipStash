@@ -1,0 +1,62 @@
+type Mutation {
+  createSnippet(input: CreateSnippet!): Snippet!
+  updateSnippet(input: UpdateSnippet!): Snippet!
+  deleteSnippet(input: DeleteSnippet!): Boolean!
+}
+
+type Query {
+  snippet(publicId: String!): Snippet!
+  snippets(input: SnippetsInput!): [Snippet!]!
+}
+
+type Snippet {
+  publicId: String!
+  title: String!
+  code: String!
+  description: String
+  language: String!
+  createdAt: String!
+  updatedAt: String!
+  user: User
+  snippetTags: [SnippetTag!]
+}
+
+type Tag {
+  publicId: String!
+  name: String!
+}
+
+type SnippetTag {
+  snippetId: String!
+  tagId: String!
+
+  tag: Tag
+  snippet: Snippet
+}
+
+input CreateSnippet {
+  title: String!
+  code: String!
+  language: String!
+  description: String
+  tags: [String!]!
+}
+
+input UpdateSnippet {
+  publicId: String!
+  title: String
+  code: String
+  language: String
+  description: String
+  tags: [String!]
+}
+
+input DeleteSnippet {
+  publicId: String!
+}
+
+input SnippetsInput {
+  languages: [String!]
+  tagIds: [String!]
+  search: String
+}
